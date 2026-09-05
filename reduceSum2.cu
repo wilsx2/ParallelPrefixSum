@@ -11,13 +11,14 @@ __global__ void reduceSum(const T *A, T *B, int count) {
   size_t i = blockIdx.x * blockDim.x + tid;
 
   // Move data into shared memory with zero padding
-  shared[tid] = (i < (size_t)count) ? A[i] : (T)0;
+  shared[tid] = (i < (size_t)count) ? A[i] : (T)0; // TODO: Perform first reduction on load
   __syncthreads();
 
   // Perform tree reduction
+  // TODO: Unroll at compile time
   for (int stride = blockDim.x/2; stride > 0; stride >>= 1) {
     if (tid < stride) {
-      shared[tid] += shared[tid + stride];
+      shared[tid] += shared[tid + stride]; 
     }
     __syncthreads();
   }
