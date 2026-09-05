@@ -1,0 +1,6 @@
+CompileFlags:
+  Compiler: clang++
+  Add:
+    - "--cuda-path=/opt/cuda"
+    - "--cuda-gpu-arch=sm_86"
+    - "-std=c++17"
